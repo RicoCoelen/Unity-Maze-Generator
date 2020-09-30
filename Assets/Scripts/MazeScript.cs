@@ -132,8 +132,23 @@ public class MazeScript : MonoBehaviour
     {
         float size = Wall.transform.localScale.x;
         Vector3 cameraPosition = Camera.main.transform.position;
-        cameraPosition.x = Mathf.Round(Columns / 2) * size;
-        cameraPosition.z = -Mathf.Round(Rows / 2) * size;
+
+        // using modulo to center camera with odd numbers for columns
+        if (Columns % 2 == 0) {
+            cameraPosition.x = (Mathf.Round(Columns / 2) * size) - 1.5f;
+        }
+        else {
+            cameraPosition.x = Mathf.Round(Columns / 2) * size;
+        }
+
+        // using modulo to center camera with odd numbers for rows
+        if (Rows % 2 == 0) {
+            cameraPosition.z = (Mathf.Round(-Rows / 2) * size) + 1.5f;
+        }
+        else {
+            cameraPosition.z = Mathf.Round(-Rows / 2) * size;
+        }
+
         Camera.main.transform.position = cameraPosition;
         Camera.main.orthographicSize = Mathf.Max(Columns, Rows) * 2f;
     }
