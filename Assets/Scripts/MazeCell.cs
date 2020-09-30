@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MazeCell
 {
+    public int row;
+    public int column;
     public bool Visited = false;
     public GameObject UpWall;
     public GameObject DownWall;

@@ -56,9 +56,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MazeCell.cs" />
     <Compile Include="Assets\Scripts\MazeScript.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Cell.cs" />
+    <Compile Include="Assets\Scripts\Maze.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

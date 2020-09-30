@@ -10,6 +10,7 @@ public class MazeScript : MonoBehaviour
     public int Columns = 2;
     public GameObject Wall;
     public GameObject Floor;
+    public Dropdown AlgorithmDropdown;
     public InputField HeightField;
     public InputField WidthField;
 
@@ -48,8 +49,23 @@ public class MazeScript : MonoBehaviour
         currentColumn = 0;
         scanComplete = false;
 
-        // then we run the algorithm to carve the paths.
-        HuntAndKill();
+        // then we run the chosen algorithm to carve the paths.
+        switch(AlgorithmDropdown.GetComponent<Dropdown>().value) 
+        {
+            case 0:
+                // Depth First-Search
+                HuntAndKill();
+                break;
+
+            case 1:
+                // Randomized Prim's Algorithim
+                PrimsAlgorithm();
+                break;
+
+            case 2:
+                Debug.Log("None");
+                break;
+        }
     }
 
     void CreateGrid()
@@ -78,6 +94,8 @@ public class MazeScript : MonoBehaviour
 
                 // create the maze cell and add references to its walls.
                 grid[i, j] = new MazeCell();
+                grid[i, j].row = i;
+                grid[i, j].column = j;
                 grid[i, j].UpWall = upWall;
                 grid[i, j].DownWall = downWall;
                 grid[i, j].LeftWall = leftWall;
@@ -90,10 +108,9 @@ public class MazeScript : MonoBehaviour
                 leftWall.transform.parent = transform;
                 rightWall.transform.parent = transform;
 
-                // create an exit door or add material to start and end floor also spawn the player.
+                // add material to start and end floor also spawn the player.
                 if (i == 0 && j == 0)
                 {
-                    //Destroy(leftWall);
                     floor.GetComponent<MeshRenderer>().material = startMat;
                     floor.name = "StartFloor";
                     GameObject tempPlayer = Instantiate(player);
@@ -103,7 +120,6 @@ public class MazeScript : MonoBehaviour
                 //  add material to end floor
                 if (i == Rows - 1 && j == Columns - 1)
                 {
-                    //Destroy(rightWall);
                     floor.GetComponent<MeshRenderer>().material = endMat;
                     floor.name = "EndFloor";
                 }
@@ -117,9 +133,9 @@ public class MazeScript : MonoBehaviour
         float size = Wall.transform.localScale.x;
         Vector3 cameraPosition = Camera.main.transform.position;
         cameraPosition.x = Mathf.Round(Columns / 2) * size;
-        cameraPosition.y = Mathf.Max(13, Mathf.Max(Rows, Columns) * 3.5f);
         cameraPosition.z = -Mathf.Round(Rows / 2) * size;
         Camera.main.transform.position = cameraPosition;
+        Camera.main.orthographicSize = Mathf.Max(Columns, Rows) * 2f;
     }
 
     void HuntAndKill()
@@ -436,4 +452,66 @@ public class MazeScript : MonoBehaviour
 
         GenerateGrid();
     }
+
+    public void PrimsAlgorithm()
+    {
+        /*
+            choose random cell
+            stop neighbors in lijst
+            kies random neighbor uit lijst
+            remove random wall tussen huidige cell van de neighbor
+            maak pad tussen twee 
+       */
+
+        // make list for neighboring cells
+        List<MazeCell> cellenDieHetPadAanraken = new List<MazeCell>();
+        MazeCell[,] tempgrid;
+
+        // chose random cell from the made up grid
+        currentRow = UnityEngine.Random.Range(0, Rows);
+        currentColumn = UnityEngine.Random.Range(0, Columns);
+
+
+        // stop de dichtbijzijnde cellen in de list en voeg ze toe aan cellenDieHetPadAanraken
+        var tempCloseNeighbors = PrimsBuurCellen(currentRow, currentColumn);
+
+
+
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Columns; j++)
+            {
+             
+             
+            }
+        }
+    }
+
+    List<(int, int)> PrimsBuurCellen(int row, int col)
+    {
+        // make new list
+        var buren = new List<(int, int)>();
+
+        for (int i = -1; i < 1; i++){
+            for (int j = -1; j < 1; j++){
+                if ((row + i) < 0) break;
+                if ((row + i) > row) break;
+                buren.Add((row + i, col + j));
+            }
+        }
+
+        // return buren
+        return buren;
+    }
+
+    /*
+    bool BuurExists(int row, int col)
+    {
+        if (PrimsBuurCellen.Exists(grid[row, col]))
+        {
+            return true;
+        }
+        return false;
+    }
+    */
 }
