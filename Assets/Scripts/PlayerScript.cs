@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public float speed = 1;
+    [SerializeField]
+    private float speed = 1;
+
     private Rigidbody rb;
     private Vector3 movement;
 
@@ -25,6 +27,7 @@ public class PlayerScript : MonoBehaviour
         // get input without lag
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
+
     private void FixedUpdate()
     {
         // move rigidbody with physics

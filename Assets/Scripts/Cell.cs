@@ -6,63 +6,55 @@ using System.Linq;
 
 public class Cell {
 
-    private Cell _CellUp;
-    private Cell _CellRight;
-    private Cell _CellBottom;
-    private Cell _CellLeft;
+    #region Properties
 
-    public bool Visited = false;
+    // private bool Visited = false;
 
-    public GameObject GOupWall;
-    public GameObject GOdownWall;
-    public GameObject GOleftWall;
-    public GameObject GOrightWall;
+    internal bool UpWall = true;
+    internal bool DownWall = true;
+    internal bool LeftWall = true;
+    internal bool RightWall = true;
 
-    public bool UpWall = true;
-    public bool DownWall = true;
-    public bool LeftWall = true;
-    public bool RightWall = true;
+    internal int RowPos { get; set; }
+    internal int ColPos { get; set; }
 
-    public int RowPos { get; set; }
-    public int ColPos { get; set; }
+    private Maze Maze { get; set; }
 
-    public Maze Maze { get; private set; }
-
-    public Cell CellUp {
-        private set { _CellUp = value; }
+    private Cell CellUp {
         get {
-            if (RowPos - 1 > 0)
-                return Maze.Cellen.Where(c => c.ColPos == this.ColPos && c.RowPos == this.RowPos - 1).FirstOrDefault();
+            if (RowPos - 1 >= 0)
+                return Maze.Cells.Where(c => c.ColPos == this.ColPos && c.RowPos == this.RowPos - 1).FirstOrDefault();
             return null;
         }
     }
-    public Cell CellRight
+    private Cell CellRight
     {
-        private set { _CellRight = value; }
         get {
             if (ColPos + 1 < this.Maze.Width)
-                return Maze.Cellen.Where(c => c.ColPos == this.ColPos + 1 && c.RowPos == this.RowPos).FirstOrDefault();
+                return Maze.Cells.Where(c => c.ColPos == this.ColPos + 1 && c.RowPos == this.RowPos).FirstOrDefault();
             return null;
         }
     }
-    public Cell CellBottom
+    private Cell CellBottom
     {
-        private set { _CellBottom = value; }
         get {
             if (RowPos + 1 < this.Maze.Height)
-                return Maze.Cellen.Where(c => c.ColPos == this.ColPos && c.RowPos == this.RowPos + 1).FirstOrDefault();
+                return Maze.Cells.Where(c => c.ColPos == this.ColPos && c.RowPos == this.RowPos + 1).FirstOrDefault();
             return null;
         }
     }
-    public Cell CellLeft
+    private Cell CellLeft
     {
-        private set { _CellLeft = value; }
         get {
-            if (ColPos - 1 > 0)
-                return Maze.Cellen.Where(c => c.ColPos == this.ColPos - 1 && c.RowPos == this.RowPos).FirstOrDefault();
+            if (ColPos - 1 >= 0)
+                return Maze.Cells.Where(c => c.ColPos == this.ColPos - 1 && c.RowPos == this.RowPos).FirstOrDefault();
             return null;
         }
     }
+
+    #endregion
+
+    #region Constructor
 
     public Cell(int x, int y, Maze maze) {
         this.RowPos = x;
@@ -70,14 +62,34 @@ public class Cell {
         this.Maze = maze;
     }
 
-    public List<Cell> GetBuren() {
-        var buren = new List<Cell>();
-        buren.Add(CellUp);
-        buren.Add(CellRight);
-        buren.Add(CellBottom);
-        buren.Add(CellLeft);
-        return buren;
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Get neighboring cells
+    /// </summary>
+    /// <returns>List of cells</returns>
+    public List<Cell> GetNeighbours() {
+
+        var neighbours = new List<Cell>();
+        
+        if (CellUp != null) neighbours.Add(CellUp);
+        if (CellRight!= null) neighbours.Add(CellRight);
+        if (CellBottom != null) neighbours.Add(CellBottom);
+        if (CellLeft != null) neighbours.Add(CellLeft);
+
+        return neighbours;
     }
+
+    public override string ToString()
+    {
+        return $"This is the cell on position X: {RowPos}, Y: {ColPos}" + 
+            $"\n this is on row: {RowPos + 1}, column: {ColPos + 1}";
+    }
+
+    #endregion
+
 }
 
 
