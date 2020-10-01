@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         // return menu
         winPanel.SetActive(false);
         mazePanel.SetActive(true);
-        MazeObject.GetComponent<MazeScript>().Regenerate();
+        //MazeObject.GetComponent<Maze>();
     }
 
     public void Quit()

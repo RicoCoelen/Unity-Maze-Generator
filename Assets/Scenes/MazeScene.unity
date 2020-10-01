@@ -673,7 +673,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 788668306}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MazeScript, Assembly-CSharp
         m_MethodName: Regenerate
         m_Mode: 1
@@ -1402,11 +1402,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 788668304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1d6fa5d5c979b2488629c4020ddaf34, type: 3}
+  m_Script: {fileID: 11500000, guid: aa263e7ddb6eba5488419e19ce08b5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rows: 11
-  Columns: 11
   Wall: {fileID: 4268282898023951374, guid: ddf1793db48325d40acea98e14b9fb59, type: 3}
   Floor: {fileID: 3784521470088159038, guid: 88ca4d92b5811fd44b34fd257bc0d555, type: 3}
   AlgorithmDropdown: {fileID: 943397004}
