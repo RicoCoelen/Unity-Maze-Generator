@@ -149,52 +149,52 @@ public class Maze : MonoBehaviour
     /// </summary>
     private void PrimsAlgorithm()
     {
-        // create 2 list een voor die all het pad zijn, en een voor die nog moeten gedaan worden.
+        // create 2 lists one for all of which are the path, and one for those that remain to be done.
         var pathCells = new List<Cell>();
         var neighbourCells = new List<Cell>();
 
-        // kies random start cell.
+        // choose random start cell.
         var randomStartCell = Cells[Random.Range(0, Cells.Count)];
 
         if (DEBUG_MODE) Debug.Log("Startcell: ");
         if (DEBUG_MODE) Debug.Log(randomStartCell);
 
-        // voeg random startcell aan het pad.
+        // add random startcell to the path.
         pathCells.Add(randomStartCell);
 
-        // voeg de buren toe aan een lijst.
-        neighbourCells.AddRange(randomStartCell.GetNeighbours()); 
+        // add the neighbors to the neighbour list.
+        neighbourCells.AddRange(randomStartCell.GetNeighbours());
 
-        // while er nog buur cellen zijn, loop totdat er geen cellen meer zijn in buurcellen.
+        // while there are still neighbor cells, loop until there are no more cells in neighbour cells.
         while (neighbourCells.Count > 0)
         {
             if (DEBUG_MODE) Debug.Log($"Iteratie {pathCells.Count - 1}");
             if (DEBUG_MODE) Debug.Log($"Er zijn reeds {pathCells.Count} cellen op het pad");
             if (DEBUG_MODE) Debug.Log($"Er zijn nu {neighbourCells.Count} mogelijke buren");
 
-            // random cell kiezen die het pad aanraakt.
+            // choose random cell that touches the pad / is in the neighbourlist.
             var index = Random.Range(0, neighbourCells.Count - 1);
             var randomNeighbourCell = neighbourCells[index];
 
             if (DEBUG_MODE) Debug.Log($"De random cell die gekozen werd uit burenlijst heeft index: {index}");
             if (DEBUG_MODE) Debug.Log(randomNeighbourCell);
 
-            // remove de random gekozen buurcell van buurcell lijst (later voegen we hem toe aan het pad).
+            // remove the randomly chosen neighbor cell from neighbor cell list (we will add it to the path later).
             neighbourCells.Remove(randomNeighbourCell);
 
-            // haal de buren van de huidige buurcell en zoek naar een die element is van het pad met linq (waarin we kijken of de (mogelijke) buurcellen ook voorkomen in het pad).
+            // get the neighbors of the current neighbor cell and look for one that is element of the path with linq (in which we check if the (possible) neighbor cells also exist in the path).
             var pathCell = randomNeighbourCell.GetNeighbours().Where(c => pathCells.Contains(c)).FirstOrDefault();
 
-            // voeg de buurcellen weer toe aan de lijst, ALLEEN waneer ze niet in het padlijst zitten en niet al in de buurlijst zitten.
+            // add the neighbour cells back to the list, ONLY if they are not in the path list and are not already in the neighbour list.
             var pathCellNeighbourCells = randomNeighbourCell.GetNeighbours().Where(c => !neighbourCells.Contains(c) && !pathCells.Contains(c));
 
-            // voeg de buurcellen van de random buurcell weer toe aan de buurcellen lijst.
+            // add the neighbor cells of the random neighbor cell to the neighbor cells list.
             neighbourCells.AddRange(pathCellNeighbourCells);
 
-            // muren tussen de huidige cel en de nieuwe cel weghalen.
+            // remove walls between the current cell and the new cell.
             DestroyWall(randomNeighbourCell, pathCell);
 
-            // voeg de weggehaalde buur uit de buurcellen lijst weer in de pad lijst.
+            // add the removed neighbor from the neighbor cells list into the path list.
             pathCells.Add(randomNeighbourCell);
 
             if (DEBUG_MODE) Debug.Log($"Er zitten nu {pathCells.Count} cellen in het pad");

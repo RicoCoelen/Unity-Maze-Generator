@@ -1410,9 +1410,9 @@ MonoBehaviour:
   AlgorithmDropdown: {fileID: 943397004}
   HeightField: {fileID: 1028132274}
   WidthField: {fileID: 2081763855}
-  StartMat: {fileID: 0}
-  EndMat: {fileID: 0}
-  Player: {fileID: 0}
+  StartMat: {fileID: 2100000, guid: 4581d23e535bdc14dbfa9a7a9dd32da5, type: 2}
+  EndMat: {fileID: 2100000, guid: 16067cc12024ef64eaaa9c2839ee0c09, type: 2}
+  Player: {fileID: 3537514951107817628, guid: 56dda343afa0a1241bef44c51df11405, type: 3}
   DEBUG_MODE: 0
 --- !u!1 &941215957
 GameObject:
@@ -1582,9 +1582,7 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: DFS (Hunt/Kill)
-      m_Image: {fileID: 0}
-    - m_Text: 'Prim''s '
+    - m_Text: Prim's
       m_Image: {fileID: 0}
     - m_Text: None
       m_Image: {fileID: 0}
@@ -3108,7 +3106,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: DFS (Hunt/Kill)
+  m_Text: Prim's
 --- !u!222 &1819707858
 CanvasRenderer:
   m_ObjectHideFlags: 0

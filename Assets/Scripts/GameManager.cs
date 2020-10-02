@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region Properties
+
     [SerializeField]
     private GameObject mazePanel;
     [SerializeField]
@@ -12,8 +14,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject MazeObject;
 
+    #endregion
 
-    // Start is called before the first frame update
+    #region Monobehavior Constructor
+
+    /// <summary>
+    /// Standard method of Monobehaviour Script that is called at loading of script
+    /// </summary>
     void Start()
     {
         // freeze time and dont show winpanel yet
@@ -21,6 +28,13 @@ public class GameManager : MonoBehaviour
         winPanel.SetActive(false);
     }
 
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Method to make the player win the game and show the win menu
+    /// </summary>
     public void Win()
     {
         // freeze time and show win
@@ -28,6 +42,9 @@ public class GameManager : MonoBehaviour
         winPanel.SetActive(true);
     }
 
+    /// <summary>
+    /// Function for button press to unfreeze time and hide the menu
+    /// </summary>
     public void Play()
     {
         // unfreeze time and let player reach end
@@ -35,6 +52,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    /// <summary>
+    /// Function for button press to let player regenerate new maze after playing and hide/show menu's
+    /// </summary>
     public void Retry()
     {
         // return menu
@@ -43,8 +63,13 @@ public class GameManager : MonoBehaviour
         MazeObject.GetComponent<Maze>().GenerateMaze();
     }
 
+    /// <summary>
+    /// (Unused) function to physically quit the game
+    /// </summary>
     public void Quit()
     {
         Application.Quit();
     }
+
+    #endregion
 }

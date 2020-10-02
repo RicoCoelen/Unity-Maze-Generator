@@ -15,9 +15,11 @@ public class Cell {
     internal bool LeftWall = true;
     internal bool RightWall = true;
 
+    // x and y positions for cells
     internal int RowPos { get; set; }
     internal int ColPos { get; set; }
 
+    // reference to the maze the cell is in
     private Maze Maze { get; set; }
 
     private Cell CellUp {
@@ -27,6 +29,7 @@ public class Cell {
             return null;
         }
     }
+
     private Cell CellRight
     {
         get {
@@ -35,6 +38,7 @@ public class Cell {
             return null;
         }
     }
+
     private Cell CellBottom
     {
         get {
@@ -43,6 +47,7 @@ public class Cell {
             return null;
         }
     }
+
     private Cell CellLeft
     {
         get {
