@@ -1582,6 +1582,8 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
+    - m_Text: Recursive Backtracking
+      m_Image: {fileID: 0}
     - m_Text: Prim's
       m_Image: {fileID: 0}
     - m_Text: None
@@ -1924,7 +1926,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 'Enter value (Default: 10)'
 --- !u!222 &1246799117
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2122,10 +2124,10 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: 'Enter value (Default: 10)'
 --- !u!222 &1319593262
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3106,7 +3108,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Prim's
+  m_Text: Recursive Backtracking
 --- !u!222 &1819707858
 CanvasRenderer:
   m_ObjectHideFlags: 0

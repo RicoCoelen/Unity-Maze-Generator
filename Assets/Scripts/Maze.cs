@@ -96,11 +96,16 @@ public class Maze : MonoBehaviour
         switch (AlgorithmDropdown.GetComponent<Dropdown>().value)
         {
             case 0:
-                this.PrimsAlgorithm();
+                this.RecursiveBacktracking(); // made last but is much nicer
+                
                 break;
 
             case 1:
-                // DFS
+                this.PrimsAlgorithm(); // made this first
+                break;
+
+            case 2:
+                // none for testing generation
                 break;
         }
 
@@ -182,7 +187,7 @@ public class Maze : MonoBehaviour
             // remove the randomly chosen neighbor cell from neighbor cell list (we will add it to the path later).
             neighbourCells.Remove(randomNeighbourCell);
 
-            // get the neighbors of the current neighbor cell and look for one that is element of the path with linq (in which we check if the (possible) neighbor cells also exist in the path).
+            // get the neighbours of the current neighbour cell and look for one that is element of the path with linq (in which we check if the (possible) neighbor cells also exist in the path).
             var pathCell = randomNeighbourCell.GetNeighbours().Where(c => pathCells.Contains(c)).FirstOrDefault();
 
             // add the neighbour cells back to the list, ONLY if they are not in the path list and are not already in the neighbour list.
@@ -196,6 +201,65 @@ public class Maze : MonoBehaviour
 
             // add the removed neighbor from the neighbor cells list into the path list.
             pathCells.Add(randomNeighbourCell);
+
+            if (DEBUG_MODE) Debug.Log($"Er zitten nu {pathCells.Count} cellen in het pad");
+        }
+    }
+
+    /// <summary>
+    /// Use recursive backtracking to carve a path trough the grid
+    /// </summary>
+    private void RecursiveBacktracking()
+    {
+        // create stack of cells
+        var pathCells = new Stack<Cell>();
+    
+        // choose random start cell.
+        var currentCell = Cells[Random.Range(0, Cells.Count)];
+
+        // mark cell as visited using method
+        currentCell.Visit();
+
+        // add cell to path stack
+        pathCells.Push(currentCell);
+
+        // check if empty // could be !pathCell.Any(); but little bit slower
+        while (pathCells.Count > 0) {
+
+            // get list of non visited cells
+            var notVisitedNeigbourCells = currentCell.GetNeighbours().Where(c => !c.Visited).ToList();
+            if (DEBUG_MODE) Debug.Log($"Er zijn nu {notVisitedNeigbourCells.Count} mogelijke buren");
+
+            // check if there are visited neighbours other wise continue
+            if (notVisitedNeigbourCells.Count > 0) {
+
+                // choose random neighbor cell from list
+                var randomChosenCell = notVisitedNeigbourCells[Random.Range(0, notVisitedNeigbourCells.Count)];
+
+                // mark random chosen cell as visited
+                randomChosenCell.Visit();
+
+                // destroy wall between chosen cell and random cell
+                DestroyWall(randomChosenCell, currentCell);
+
+                // push cell onto the stack
+                pathCells.Push(randomChosenCell);
+
+                // assign the the randomly chosen cell as current cell
+                currentCell = randomChosenCell;
+            }
+            else {
+
+                // pop last cell of the stack until neighbours are found
+                pathCells.Pop(); 
+
+                // check if stack is not empty before peeking
+                if (pathCells.Count > 0)
+                {
+                    // make the previous cell the current cell
+                    currentCell = pathCells.Peek();
+                }
+            }
 
             if (DEBUG_MODE) Debug.Log($"Er zitten nu {pathCells.Count} cellen in het pad");
         }

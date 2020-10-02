@@ -8,7 +8,7 @@ public class Cell {
 
     #region Properties
 
-    // private bool Visited = false;
+    internal bool Visited = false;
 
     internal bool UpWall = true;
     internal bool DownWall = true;
@@ -85,6 +85,14 @@ public class Cell {
         if (CellLeft != null) neighbours.Add(CellLeft);
 
         return neighbours;
+    }
+
+    /// <summary>
+    /// Marks cell as visited
+    /// </summary>
+    public void Visit()
+    {
+        this.Visited = true;
     }
 
     public override string ToString()
