@@ -1407,6 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wall: {fileID: 4268282898023951374, guid: ddf1793db48325d40acea98e14b9fb59, type: 3}
   Floor: {fileID: 3784521470088159038, guid: 88ca4d92b5811fd44b34fd257bc0d555, type: 3}
+  Pillar: {fileID: 1589337478290822544, guid: 0c0630259e7f8ff438112b4944413368, type: 3}
   AlgorithmDropdown: {fileID: 943397004}
   HeightField: {fileID: 1028132274}
   WidthField: {fileID: 2081763855}

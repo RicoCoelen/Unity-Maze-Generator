@@ -18,6 +18,8 @@ public class Maze : MonoBehaviour
     private GameObject Wall;
     [SerializeField]
     private GameObject Floor;
+    [SerializeField]
+    private GameObject Pillar;
 
     // UI vars
     [SerializeField]
@@ -113,6 +115,7 @@ public class Maze : MonoBehaviour
         foreach (var cell in this.Cells)
         {
             GenerateCell(cell);
+            GenerateCellPillar(cell);
         }
 
         // after generation change cam pos
@@ -336,6 +339,60 @@ public class Maze : MonoBehaviour
 
             // add this object to the maze game object for cleaner hierarchy.
             rightWall.transform.parent = transform; 
+        }
+    }
+
+    /// <summary>
+    /// Create pillars using the provided cell
+    /// </summary>
+    /// <param name="cell">The cell to be used to instantiate the pillars on</param>
+    private void GenerateCellPillar(Cell cell)
+    {
+        // get the x scale of the wall prefab for calculations
+        float size = this.Wall.transform.localScale.x;
+
+        // left top pillar
+        if (!cell.LeftWall && !cell.UpWall)
+        {
+            // instantiate the left top pillar with cell variables, and change the name for cleaner overview
+            GameObject LeftTopPillar = Instantiate(this.Pillar, new Vector3(cell.ColPos * size - 1.25f, 1.75f, -cell.RowPos * size + 1.25f), Quaternion.identity);
+            LeftTopPillar.name = "LeftTopPillar_" + cell.RowPos + "_" + cell.ColPos;
+
+            // add this object to the maze game object for cleaner hierarchy.
+            LeftTopPillar.transform.parent = transform;
+        }
+
+        // right top pillar
+        if (!cell.UpWall && !cell.RightWall)
+        {
+            // instantiate the right top pillar with cell variables, and change the name for cleaner overview
+            GameObject RightTopPillar = Instantiate(this.Pillar, new Vector3(cell.ColPos * size + 1.25f, 1.75f, -cell.RowPos * size + 1.25f), Quaternion.identity);
+            RightTopPillar.name = "RightTopPillar_" + cell.RowPos + "_" + cell.ColPos;
+
+            // add this object to the maze game object for cleaner hierarchy.
+            RightTopPillar.transform.parent = transform;
+        }
+
+        // right bottom pillar
+        if (!cell.RightWall && !cell.DownWall)
+        {
+            // instantiate the right bottom pillar with cell variables, and change the name for cleaner overview
+            GameObject RightBottomPillar = Instantiate(this.Pillar, new Vector3(cell.ColPos * size + 1.25f, 1.75f, -cell.RowPos * size - 1.25f), Quaternion.Euler(0, 90, 0));
+            RightBottomPillar.name = "RightBottomPillar_" + cell.RowPos + "_" + cell.ColPos;
+
+            // add this object to the maze game object for cleaner hierarchy.
+            RightBottomPillar.transform.parent = transform;
+        }
+
+        // left bottom pillar
+        if (!cell.LeftWall && !cell.DownWall)
+        {
+            // instantiate the left bottom pillar with cell variables, and change the name for cleaner overview
+            GameObject LeftBottomPillar = Instantiate(this.Pillar, new Vector3(cell.ColPos * size - 1.25f, 1.75f, -cell.RowPos * size - 1.25f), Quaternion.Euler(0, 90, 0));
+            LeftBottomPillar.name = "LeftBottomPillar_" + cell.RowPos + "_" + cell.ColPos;
+
+            // add this object to the maze game object for cleaner hierarchy.
+            LeftBottomPillar.transform.parent = transform;
         }
     }
 
